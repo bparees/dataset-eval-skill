@@ -74,8 +74,6 @@ pip install -r scripts/requirements.txt
 
 ## Usage
 
-### With an AI agent (recommended)
-
 Point the agent at your evaluation dataset directory:
 
 > *"Evaluate `/path/to/my-eval-dataset` against the golden dataset standards."*
@@ -86,26 +84,6 @@ The agent will:
 2. Read the consolidated output.
 3. Apply the full rubric criteria from `SKILL.md` using its own judgment.
 4. Report findings using the structured output template.
-
-### From the command line
-
-Run the parser/chunking step manually (the LLM then reads the output files):
-
-```bash
-cd scripts
-python golden_evaluator.py /path/to/your/dataset ./reports
-# optional: python golden_evaluator.py /path/to/your/dataset ./reports --chunk-size 30
-```
-
-**Output** in `./reports/eval_run_<timestamp>/`:
-
-| File | Description |
-|------|-------------|
-| `manifest.json` | Structural summary + ordered list of all chunk files — read this first |
-| `chunk_001_eval.json` … `chunk_NNN_eval.json` | Compact (truncated) 50-sample slices for LLM evaluation |
-| `chunk_001.json` … `chunk_NNN.json` | Full-text versions for deep-diving specific samples |
-
-The LLM reads the manifest, then processes every `_eval.json` chunk file in order, keeping a running tally of scenario types, grounding issues, verification coverage, and anti-pattern signals. After the last chunk it synthesizes findings into `eval_report_<YYYYMMDD>.md`.
 
 ## Try it: real-world sample dataset
 
